@@ -1,0 +1,44 @@
+{
+  "name": "BriqueOS",
+  "short_name": "BriqueOS",
+  "description": "Controle de revendas — compras, vendas, lucros",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#080A0F",
+  "theme_color": "#0D1117",
+  "categories": ["finance", "productivity"],
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='38' fill='%23FF6B2B'/><path d='M48 84 96 48l48 36v60a8 8 0 01-8 8H56a8 8 0 01-8-8z' fill='none' stroke='white' stroke-width='10' stroke-linecap='round' stroke-linejoin='round'/><polyline points='84,156 84,108 108,108 108,156' fill='none' stroke='white' stroke-width='10' stroke-linecap='round' stroke-linejoin='round'/></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='100' fill='%23FF6B2B'/><path d='M128 224 256 128l128 96v160a20 20 0 01-20 20H148a20 20 0 01-20-20z' fill='none' stroke='white' stroke-width='26' stroke-linecap='round' stroke-linejoin='round'/><polyline points='224,416 224,288 288,288 288,416' fill='none' stroke='white' stroke-width='26' stroke-linecap='round' stroke-linejoin='round'/></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Nova Compra",
+      "short_name": "Compra",
+      "description": "Registrar nova compra",
+      "url": "./index.html#compra",
+      "icons": [{ "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><rect width='96' height='96' rx='20' fill='%23FF6B2B'/><line x1='48' y1='20' x2='48' y2='76' stroke='white' stroke-width='8' stroke-linecap='round'/><line x1='20' y1='48' x2='76' y2='48' stroke='white' stroke-width='8' stroke-linecap='round'/></svg>", "sizes": "96x96" }]
+    },
+    {
+      "name": "Nova Venda",
+      "short_name": "Venda",
+      "description": "Registrar nova venda",
+      "url": "./index.html#venda",
+      "icons": [{ "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><rect width='96' height='96' rx='20' fill='%2300D48A'/><polyline points='20,56 36,40 56,60 76,32' fill='none' stroke='white' stroke-width='8' stroke-linecap='round' stroke-linejoin='round'/></svg>", "sizes": "96x96" }]
+    }
+  ],
+  "screenshots": [],
+  "prefer_related_applications": false
+}

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#080A0F"/>
+<link rel="manifest" href="manifest.json"/>
+<title>BriqueOS</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="static/css/login.css"/>
+</head>
+<body>
+
+<div class="bg-wrap"><div class="bg-glow"></div></div>
+<div class="bg-grid"></div>
+
+<div class="screen">
+  <div class="card">
+    <div class="logo">
+      <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#FF6B2B,#FF3D00);display:flex;align-items:center;justify-content:center;box-shadow:0 0 24px rgba(255,107,43,0.4);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+          <polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+      </div>
+      <span style="font-family:'Syne',sans-serif;font-size:24px;font-weight:900;letter-spacing:-0.5px;">Brique<span style="color:#FF6B2B;">OS</span></span>
+    </div>
+
+    <div class="tabs" id="auth-tabs">
+      <button class="tab active" id="tab-btn-login" onclick="switchTab('login')">Entrar</button>
+      <button class="tab" id="tab-btn-cadastro" onclick="switchTab('cadastro')">Criar conta</button>
+    </div>
+
+    <div class="tab-panel active" id="tab-login">
+      <div class="form-title">Bem-vindo de volta 👋</div>
+      <div class="form-sub">Entre para acessar seu painel</div>
+      <div class="msg err" id="login-err">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span></span>
+      </div>
+      <div class="field">
+        <label class="field-lbl">E-mail</label>
+        <input class="fi" id="l-email" type="email" inputmode="email" placeholder="seu@email.com" autocomplete="email" autocapitalize="none"/>
+      </div>
+      <div class="field">
+        <label class="field-lbl">Senha</label>
+        <div class="input-w">
+          <input class="fi fi-pw" id="l-senha" type="password" placeholder="••••••••" autocomplete="current-password"/>
+          <button class="eye" type="button" onclick="togglePw('l-senha',this)" tabindex="-1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+      </div>
+      <span class="forgot" onclick="switchTab('forgot')">Esqueci a senha</span>
+      <div class="clr"></div>
+      <button class="btn-main" id="btn-login" onclick="doLogin()">
+        <div class="btn-inner"><div class="spin"></div><span class="btn-txt">Entrar</span></div>
+      </button>
+    </div>
+
+    <div class="tab-panel" id="tab-cadastro">
+      <div class="form-title">Comece de graça 🚀</div>
+      <div class="form-sub">Controle suas revendas em minutos</div>
+      <div class="feats">
+        <span class="feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>15 compras grátis</span>
+        <span class="feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Dashboard completo</span>
+        <span class="feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Sem cartão</span>
+      </div>
+      <div class="msg err" id="cad-err">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span></span>
+      </div>
+      <div class="field">
+        <label class="field-lbl">Seu nome</label>
+        <input class="fi" id="c-nome" type="text" placeholder="João Silva" autocomplete="name" autocapitalize="words"/>
+      </div>
+      <div class="field">
+        <label class="field-lbl">E-mail</label>
+        <input class="fi" id="c-email" type="email" inputmode="email" placeholder="seu@email.com" autocomplete="email" autocapitalize="none"/>
+      </div>
+      <div class="field">
+        <label class="field-lbl">Senha</label>
+        <div class="input-w">
+          <input class="fi fi-pw" id="c-senha" type="password" placeholder="Mínimo 6 caracteres" autocomplete="new-password"/>
+          <button class="eye" type="button" onclick="togglePw('c-senha',this)" tabindex="-1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+      </div>
+      <button class="btn-main" id="btn-cad" onclick="doCadastro()">
+        <div class="btn-inner"><div class="spin"></div><span class="btn-txt">Criar minha conta</span></div>
+      </button>
+    </div>
+
+    <div class="tab-panel" id="tab-forgot">
+      <div class="form-title">Redefinir senha 🔐</div>
+      <div class="form-sub">Informe seu e-mail e enviaremos um link para criar uma nova senha.</div>
+      <div class="msg err" id="forgot-err">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span></span>
+      </div>
+      <div class="msg ok" id="forgot-ok">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        <span>Link enviado! Verifique a caixa de entrada e spam.</span>
+      </div>
+      <div class="field">
+        <label class="field-lbl">E-mail cadastrado</label>
+        <input class="fi" id="f-email" type="email" inputmode="email" placeholder="seu@email.com" autocomplete="email" autocapitalize="none"/>
+      </div>
+      <button class="btn-main blue" id="btn-forgot" onclick="doForgotPassword()">
+        <div class="btn-inner"><div class="spin"></div><span class="btn-txt">Enviar link de redefinição</span></div>
+      </button>
+    </div>
+
+    <div class="tab-panel" id="tab-reset">
+      <div class="form-title">Nova senha 🔑</div>
+      <div class="form-sub">Escolha uma senha segura para sua conta.</div>
+      <div class="msg err" id="reset-err">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span></span>
+      </div>
+      <div class="msg ok" id="reset-ok">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        <span>Senha redefinida! Redirecionando...</span>
+      </div>
+      <div class="field">
+        <label class="field-lbl">Nova senha</label>
+        <div class="input-w">
+          <input class="fi fi-pw" id="r-senha" type="password" placeholder="Mínimo 6 caracteres"/>
+          <button class="eye" type="button" onclick="togglePw('r-senha',this)" tabindex="-1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="field">
+        <label class="field-lbl">Confirmar senha</label>
+        <div class="input-w">
+          <input class="fi fi-pw" id="r-conf" type="password" placeholder="Repita a senha"/>
+          <button class="eye" type="button" onclick="togglePw('r-conf',this)" tabindex="-1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+      </div>
+      <button class="btn-main blue" id="btn-reset" onclick="doResetPassword()">
+        <div class="btn-inner"><div class="spin"></div><span class="btn-txt">Salvar nova senha</span></div>
+      </button>
+    </div>
+
+    <div class="card-foot" id="auth-foot">
+      Não tem conta? <span onclick="switchTab('cadastro')">Cadastre-se grátis</span>
+    </div>
+  </div>
+</div>
+
+<script src="static/js/login.js"></script>
+</body>
+</html>

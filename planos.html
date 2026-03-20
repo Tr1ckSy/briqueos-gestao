@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>BriqueOS — Planos</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="static/css/base.css"/>
+<link rel="stylesheet" href="static/css/planos.css"/>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-ico">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    </div>
+    <div class="nav-logo-t">Brique<span>OS</span></div>
+  </a>
+  <a href="index.html" class="nav-back">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    Voltar ao app
+  </a>
+</nav>
+
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="badge"><div class="badge-dot"></div>Escolha seu plano</div>
+  <h1>Simples, transparente<br>e <span>sem surpresas</span></h1>
+  <p class="hero-sub">Comece grátis e faça upgrade quando quiser. Sem cartão. Sem fidelidade.</p>
+  <div class="toggle-wrap">
+    <button class="toggle-btn active" id="btn-mensal" onclick="setBilling('mensal')">Mensal</button>
+    <button class="toggle-btn" id="btn-anual" onclick="setBilling('anual')">
+      Anual <span class="save-tag">−30%</span>
+    </button>
+  </div>
+</section>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></symbol>
+    <symbol id="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+    <symbol id="ic-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></symbol>
+    <symbol id="ic-rocket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 00-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 012-3.95A12.88 12.88 0 0122 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 01-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></symbol>
+    <symbol id="ic-briefcase" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></symbol>
+    <symbol id="ic-zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></symbol>
+    <symbol id="ic-crown" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h20M5 20l-2-9 5 4 4-7 4 7 5-4-2 9"/></symbol>
+    <symbol id="ic-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></symbol>
+    <symbol id="ic-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></symbol>
+    <symbol id="ic-image" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></symbol>
+    <symbol id="ic-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></symbol>
+    <symbol id="ic-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></symbol>
+    <symbol id="ic-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+    <symbol id="ic-msg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></symbol>
+    <symbol id="ic-cloud" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.88 18.09A5 5 0 0018 9h-1.26A8 8 0 103 16.29"/></symbol>
+    <symbol id="ic-inf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18.178 8c5.096 0 5.096 8 0 8-5.095 0-7.133-8-12.739-8-4.585 0-4.585 8 0 8 5.606 0 7.644-8 12.739-8z"/></symbol>
+    <symbol id="ic-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></symbol>
+    <symbol id="ic-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></symbol>
+  </defs>
+</svg>
+
+<section class="plans" id="plans">
+  <div class="plan free">
+    <div class="plan-icon"><svg><use href="#ic-home"/></svg></div>
+    <div class="plan-name">Free</div>
+    <div class="plan-price"><span class="curr">R$</span><span class="amt">0</span><span class="per">/mês</span></div>
+    <div class="plan-save"></div>
+    <div class="plan-desc">Para quem está começando. Sem cartão necessário.</div>
+    <div class="divider"></div>
+    <ul class="features">
+      <li class="feat yes"><div class="feat-ico"><svg><use href="#ic-check"/></svg></div><span>Até <strong>15 compras</strong> cadastradas</span></li>
+      <li class="feat yes"><div class="feat-ico"><svg><use href="#ic-check"/></svg></div><span>Vendas ilimitadas</span></li>
+      <li class="feat yes"><div class="feat-ico"><svg><use href="#ic-check"/></svg></div><span>Dashboard básico</span></li>
+      <li class="feat yes"><div class="feat-ico"><svg><use href="#ic-check"/></svg></div><span>Sistema de níveis e XP</span></li>
+      <li class="feat yes"><div class="feat-ico"><svg><use href="#ic-check"/></svg></div><span>App mobile (PWA)</span></li>
+      <li class="feat no"><div class="feat-ico"><svg><use href="#ic-x"/></svg></div><span>Relatórios avançados</span></li>
+      <li class="feat no"><div class="feat-ico"><svg><use href="#ic-x"/></svg></div><span>Exportação CSV</span></li>
+      <li class="feat no"><div class="feat-ico"><svg><use href="#ic-x"/></svg></div><span>Foto dos produtos</span></li>
+      <li class="feat no"><div class="feat-ico"><svg><use href="#ic-x"/></svg></div><span>Alertas de estoque</span></li>
+    </ul>
+    <button class="plan-btn btn-free" onclick="window.location.href='index.html'">
+      <svg><use href="#ic-home"/></svg>
+      Usar gratuitamente
+    </button>
+  </div>
+
+  <div class="plan popular">
+    <div class="plan-badge pop"><svg><use href="#ic-zap"/></svg>Mais popular</div>
+    <div class="plan-icon"><svg><use href="#ic-rocket"/></svg></div>
+    <div class="plan-name">Pro</div>
+    <div class="plan-price"><span class="curr">R$</span><span class="amt" id="pro-amt">29</span><span class="per">/mês</span></div>
+    <div class="plan-save" id="pro-save"></div>
+    <div class="plan-desc">Para revendedores sérios que querem controle total.</div>
+    <div class="divider"></div>
+    <ul class="features">
+      <li class="feat hl"><div class="feat-ico"><svg><use href="#ic-check"/></svg></div><span>Compras <strong>ilimitadas</strong></span></li>
+      <li class="feat hl"><div class="feat-ico"><svg><use href="#ic-chart"/></svg></div><span>Relatórios avançados completos</span></li>
+      <li class="feat hl"><div class="feat-ico"><svg><use href="#ic-download"/></svg></div><span>Exportação CSV</span></li>
+      <li class="feat hl"><div class="feat-ico"><svg><use href="#ic-image"/></svg></div><span>Foto dos produtos</span></li>
+      <li class="feat hl"><div class="feat-ico"><svg><use href="#ic-bell"/></svg></div><span>Alertas de estoque parado</span></li>
+      <li class="feat yes"><div class="feat-ico"><svg><use href="#ic-check"/></svg></div><span>Histórico 90 dias</span></li>
+      <li class="feat yes"><div class="feat-ico"><svg><use href="#ic-check"/></svg></div><span>Meta mensal de lucro</span></li>
+      <li class="feat yes"><div class="feat-ico"><svg><use href="#ic-msg"/></svg></div><span>Suporte via app</span></li>
+      <li class="feat no"><div class="feat-ico"><svg><use href="#ic-x"/></svg></div><span>Multi-usuário</span></li>
+    </ul>
+    <button class="plan-btn btn-pro" onclick="openPix('pro')">
+      <svg><use href="#ic-zap"/></svg>
+      <span id="pro-btn">Assinar Pro — R$ 29/mês</span>
+    </button>
+  </div>
+
+  <div class="plan biz">
+    <div class="plan-badge biz"><svg><use href="#ic-crown"/></svg>Business</div>
+    <div class="plan-icon"><svg><use href="#ic-briefcase"/></svg></div>
+    <div class="plan-name">Business</div>
+    <div class="plan-price"><span class="curr">R$</span><span class="amt" id="biz-amt">79</span><span class="per">/mês</span></div>
+    <div class="plan-save" id="biz-save"></div>
+    <div class="plan-desc">Para equipes e revendedores de alto volume.</div>
+    <div class="divider"></div>
+    <ul class="features">
+      <li class="feat pu"><div class="feat-ico"><svg><use href="#ic-check"/></svg></div><span>Tudo do Pro incluído</span></li>
+      <li class="feat pu"><div class="feat-ico"><svg><use href="#ic-users"/></svg></div><span>Até <strong>5 usuários</strong> na conta</span></li>
+      <li class="feat pu"><div class="feat-ico"><svg><use href="#ic-cloud"/></svg></div><span>Backup automático diário</span></li>
+      <li class="feat pu"><div class="feat-ico"><svg><use href="#ic-inf"/></svg></div><span>Histórico ilimitado</span></li>
+      <li class="feat pu"><div class="feat-ico"><svg><use href="#ic-code"/></svg></div><span>API de integração</span></li>
+      <li class="feat pu"><div class="feat-ico"><svg><use href="#ic-chart"/></svg></div><span>Relatórios personalizados</span></li>
+      <li class="feat yes"><div class="feat-ico"><svg><use href="#ic-shield"/></svg></div><span>Painel de controle da equipe</span></li>
+      <li class="feat yes"><div class="feat-ico"><svg><use href="#ic-msg"/></svg></div><span>Suporte via app + WhatsApp</span></li>
+      <li class="feat yes"><div class="feat-ico"><svg><use href="#ic-star"/></svg></div><span>Atendimento prioritário</span></li>
+    </ul>
+    <button class="plan-btn btn-biz" onclick="openPix('business')">
+      <svg><use href="#ic-crown"/></svg>
+      <span id="biz-btn">Assinar Business — R$ 79/mês</span>
+    </button>
+  </div>
+</section>
+
+<section class="comp-wrap">
+  <h2>Compare todos os recursos</h2>
+  <p>Tudo que você precisa saber antes de escolher</p>
+  <table class="comp-tbl">
+    <thead>
+      <tr>
+        <th>Recurso</th>
+        <th>Free</th>
+        <th style="color:var(--orange)">Pro</th>
+        <th style="color:var(--purple)">Business</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="cat-row"><td colspan="4">Estoque e Compras</td></tr>
+      <tr><td>Compras cadastradas</td><td>15</td><td>Ilimitadas</td><td>Ilimitadas</td></tr>
+      <tr><td>Vendas registradas</td><td>Ilimitadas</td><td>Ilimitadas</td><td>Ilimitadas</td></tr>
+      <tr><td>Foto dos produtos</td>
+        <td><span class="chk n"><svg width="9" height="9"><use href="#ic-x"/></svg></span></td>
+        <td><span class="chk y"><svg width="9" height="9"><use href="#ic-check"/></svg></span></td>
+        <td><span class="chk y"><svg width="9" height="9"><use href="#ic-check"/></svg></span></td></tr>
+      <tr><td>Alertas de estoque parado</td>
+        <td><span class="chk n"><svg width="9" height="9"><use href="#ic-x"/></svg></span></td>
+        <td><span class="chk y"><svg width="9" height="9"><use href="#ic-check"/></svg></span></td>
+        <td><span class="chk y"><svg width="9" height="9"><use href="#ic-check"/></svg></span></td></tr>
+      <tr class="cat-row"><td colspan="4">Financeiro e Relatórios</td></tr>
+      <tr><td>Dashboard</td><td>Básico</td><td>Completo</td><td>Completo</td></tr>
+      <tr><td>Relatórios avançados</td>
+        <td><span class="chk n"><svg width="9" height="9"><use href="#ic-x"/></svg></span></td>
+        <td><span class="chk y"><svg width="9" height="9"><use href="#ic-check"/></svg></span></td>
+        <td><span class="chk y"><svg width="9" height="9"><use href="#ic-check"/></svg></span></td></tr>
+      <tr><td>Exportar CSV</td>
+        <td><span class="chk n"><svg width="9" height="9"><use href="#ic-x"/></svg></span></td>
+        <td><span class="chk y"><svg width="9" height="9"><use href="#ic-check"/></svg></span></td>
+        <td><span class="chk y"><svg width="9" height="9"><use href="#ic-check"/></svg></span></td></tr>
+      <tr><td>Relatórios personalizados</td>
+        <td><span class="chk n"><svg width="9" height="9"><use href="#ic-x"/></svg></span></td>
+        <td><span class="chk n"><svg width="9" height="9"><use href="#ic-x"/></svg></span></td>
+        <td><span class="chk y"><svg width="9" height="9"><use href="#ic-check"/></svg></span></td></tr>
+      <tr class="cat-row"><td colspan="4">Conta e Suporte</td></tr>
+      <tr><td>Usuários por conta</td><td>1</td><td>1</td><td>Até 5</td></tr>
+      <tr><td>Histórico de atividade</td><td>7 dias</td><td>90 dias</td><td>Ilimitado</td></tr>
+      <tr><td>Backup automático</td>
+        <td><span class="chk n"><svg width="9" height="9"><use href="#ic-x"/></svg></span></td>
+        <td><span class="chk n"><svg width="9" height="9"><use href="#ic-x"/></svg></span></td>
+        <td>Diário</td></tr>
+      <tr><td>API de integração</td>
+        <td><span class="chk n"><svg width="9" height="9"><use href="#ic-x"/></svg></span></td>
+        <td><span class="chk n"><svg width="9" height="9"><use href="#ic-x"/></svg></span></td>
+        <td><span class="chk y"><svg width="9" height="9"><use href="#ic-check"/></svg></span></td></tr>
+      <tr><td>Suporte</td><td>Comunidade</td><td>Via app</td><td>App + WhatsApp</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="faq-wrap">
+  <h2>Perguntas frequentes</h2>
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">Posso cancelar a qualquer momento?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="faq-a">Sim, não há fidelidade. Seu plano continua ativo até o fim do período pago e depois volta automaticamente para o Free.</div>
+  </div>
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">Como funciona o pagamento?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="faq-a">Pagamento via PIX direto no app. Após confirmação, seu plano é ativado imediatamente. Não armazenamos dados de cartão.</div>
+  </div>
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">O que acontece com meus dados se eu voltar ao Free?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="faq-a">Nada é apagado. Você continua vendo todo o histórico. Apenas não conseguirá adicionar novas compras acima do limite de 15.</div>
+  </div>
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">O plano anual tem desconto?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="faq-a">Sim! Pagando anualmente você economiza 30%. Pro sai por R$ 243/ano e Business por R$ 663/ano.</div>
+  </div>
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">O Business inclui suporte por WhatsApp?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="faq-a">Sim! Assinantes Business recebem suporte prioritário via WhatsApp, com resposta em até 4 horas em dias úteis.</div>
+  </div>
+</section>
+
+<footer><strong>BriqueOS</strong> · Sistema de controle de revendas · Feito para revendedores brasileiros</footer>
+
+<div class="ov" id="ov-pix">
+  <div class="mod">
+    <div class="mod-head">
+      <div>
+        <div class="mod-title" id="pix-title">Assinar Plano Pro</div>
+        <div class="mod-sub">Pagamento via PIX — ativação imediata</div>
+      </div>
+      <button class="mod-close" onclick="closePix()">×</button>
+    </div>
+    <div id="pix-form" class="mod-body">
+      <div style="background:rgba(0,212,138,.07);border:1px solid rgba(0,212,138,.2);border-radius:var(--rs);padding:11px 13px;margin-bottom:14px;font-size:12px;color:var(--green);display:flex;align-items:center;gap:8px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        PIX seguro · Ativação em segundos · Sem cartão
+      </div>
+      <div class="fg"><label class="fl">Nome completo</label><input class="fi" id="pix-nome" placeholder="João Silva"/></div>
+      <div class="fg"><label class="fl">CPF <span class="r">*</span></label>
+        <input class="fi" id="pix-cpf" placeholder="000.000.000-00" maxlength="14"
+          oninput="this.value=this.value.replace(/\D/g,'').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d{1,2})$/,'$1-$2')"/></div>
+      <div style="background:var(--bg4);border-radius:var(--rs);padding:11px;font-size:12px;margin-bottom:14px;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:3px;">
+          <span style="color:var(--txt2)" id="pix-desc">Plano Pro — 30 dias</span>
+          <span style="font-weight:700" id="pix-price">R$ 29,00</span>
+        </div>
+        <div style="font-size:10px;color:var(--txt3)">Renovação manual · via PIX</div>
+      </div>
+      <button class="btn bp" id="pix-btn" onclick="gerarPix()" style="width:100%;justify-content:center;padding:11px;">Gerar QR Code PIX</button>
+    </div>
+    <div id="pix-qr" class="mod-body" style="display:none;text-align:center;">
+      <div style="font-size:11px;color:var(--txt2);margin-bottom:12px;">Escaneie com o app do seu banco</div>
+      <div class="pix-qr-box">
+        <img id="pix-img" src="" alt="QR" style="display:none;width:100%;"/>
+        <div id="pix-loading" style="font-size:11px;color:var(--txt3);">Carregando...</div>
+      </div>
+      <div class="pix-key-box">
+        <div class="pix-key-txt" id="pix-key"></div>
+        <button class="btn bg_" onclick="copyPix()" style="padding:5px 11px;font-size:11px;flex-shrink:0;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          Copiar
+        </button>
+      </div>
+      <div style="font-size:11px;color:var(--txt3);margin-bottom:10px;">
+        Expira em <strong id="pix-countdown">10:00</strong>
+      </div>
+      <div class="pix-status" id="pix-status">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;vertical-align:middle;margin-right:5px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Aguardando pagamento...
+      </div>
+      <button class="btn bg_" onclick="closePix()" style="width:100%;justify-content:center;">Fechar (pagar depois)</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><div class="tdot" id="tdot"></div><span id="tmsg"></span></div>
+
+<script src="static/js/planos.js"></script>
+</body>
+</html>

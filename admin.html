@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="theme-color" content="#0D1117"/>
+<title>BriqueOS — Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="static/css/base.css"/>
+<link rel="stylesheet" href="static/css/admin.css"/>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="logo-wrap">
+    <div style="width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#FF4D6A,#c0392b);display:flex;align-items:center;justify-content:center;box-shadow:0 0 18px rgba(255,77,106,0.35);flex-shrink:0;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    </div>
+    <span style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800;">Brique<span style="color:#FF4D6A;">OS</span></span>
+    <span class="admin-badge">Admin</span>
+  </div>
+  <nav>
+    <div class="ng">Painel</div>
+    <div class="ni active" onclick="goto('dashboard',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Dashboard
+    </div>
+    <div class="ng">Gestão</div>
+    <div class="ni" onclick="goto('usuarios',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      Usuários <span class="nb" id="nb-users">—</span>
+    </div>
+    <div class="ni" onclick="goto('planos',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      Planos & Receita
+    </div>
+    <div class="ni" onclick="goto('transacoes',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+      Transações
+    </div>
+    <div class="ni" onclick="goto('ranking',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      Ranking
+    </div>
+    <div class="ng">Sistema</div>
+    <div class="ni" onclick="goto('anomalias',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      Anomalias <span class="nb" id="nb-anomalias" style="background:var(--rd);color:var(--red);border-color:rgba(255,77,106,0.3)">—</span>
+    </div>
+    <div class="ni" onclick="goto('retencao',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      Retenção
+    </div>
+    <div class="ni" onclick="goto('logs',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      Logs de Acesso
+    </div>
+    <div class="ni" onclick="goto('sistema',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93L17.66 6.34M6.34 17.66L4.93 19.07M19.07 19.07L17.66 17.66M6.34 6.34L4.93 4.93"/><circle cx="12" cy="12" r="10" stroke-opacity=".3"/></svg>
+      Sistema
+    </div>
+    <div class="ng">Conta</div>
+    <div class="ni" onclick="window.location.href='index.html'">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Voltar ao App
+    </div>
+    <div class="ni" onclick="logout()" style="color:var(--red)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      Sair
+    </div>
+  </nav>
+  <div class="sidebar-foot">
+    <div class="sf-user">
+      <div class="sf-av" id="sf-av">A</div>
+      <div>
+        <div class="sf-name" id="sf-nome">Admin</div>
+        <div class="sf-sub">Administrador</div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<div class="main">
+  <div class="topbar">
+    <span class="page-t" id="ptitle">Dashboard Admin</span>
+    <div class="topbar-actions">
+      <button class="tb-btn" onclick="toggleTheme()" id="theme-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      </button>
+      <button class="tb-btn" onclick="refreshAll()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+      </button>
+      <button class="btn bp" onclick="openCreateUser()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Novo usuário
+      </button>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div id="sec-dashboard" class="sec active">
+      <div class="stat-grid" id="dash-stats">
+        <div class="sk" style="height:110px;border-radius:var(--r)"></div>
+        <div class="sk" style="height:110px;border-radius:var(--r)"></div>
+        <div class="sk" style="height:110px;border-radius:var(--r)"></div>
+        <div class="sk" style="height:110px;border-radius:var(--r)"></div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px;" id="plano-stats">
+        <div class="sk" style="height:80px;border-radius:var(--r)"></div>
+        <div class="sk" style="height:80px;border-radius:var(--r)"></div>
+        <div class="sk" style="height:80px;border-radius:var(--r)"></div>
+        <div class="sk" style="height:80px;border-radius:var(--r)"></div>
+      </div>
+      <div class="grid-21">
+        <div class="card">
+          <div class="ch">
+            <div class="ch-left">
+              <div class="ch-ico" style="background:var(--bd)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+              <div><div class="ct">Receita da Plataforma</div><div class="csub">Últimos 8 meses</div></div>
+            </div>
+            <div style="display:flex;gap:10px;">
+              <div style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--txt2)"><span style="width:8px;height:8px;border-radius:2px;background:rgba(77,158,255,0.6);display:inline-block"></span>Receita</div>
+              <div style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--txt2)"><span style="width:8px;height:8px;border-radius:2px;background:rgba(0,212,138,0.7);display:inline-block"></span>Lucro</div>
+            </div>
+          </div>
+          <div style="padding:16px 18px;"><div id="dash-chart" class="bar-chart"></div></div>
+        </div>
+        <div class="card">
+          <div class="ch">
+            <div class="ch-left">
+              <div class="ch-ico" style="background:var(--gd)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+              <div><div class="ct">Crescimento de Usuários</div><div class="csub">Novos cadastros</div></div>
+            </div>
+          </div>
+          <div style="padding:16px 18px;"><div id="user-growth-chart"></div></div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="ch">
+            <div class="ch-left">
+              <div class="ch-ico" style="background:var(--gold-d)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+              <div><div class="ct">Top Usuários</div><div class="csub">Por volume de negócios</div></div>
+            </div>
+          </div>
+          <div id="top-users-list" style="padding:6px 0;"></div>
+        </div>
+        <div class="card">
+          <div class="ch">
+            <div class="ch-left">
+              <div class="ch-ico" style="background:var(--og)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+              <div><div class="ct">Atividade Recente</div><div class="csub">Últimas transações</div></div>
+            </div>
+          </div>
+          <div id="recent-activity" style="max-height:240px;overflow-y:auto;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="sec-usuarios" class="sec">
+      <div class="card">
+        <div class="toolbar">
+          <div class="search-w">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input class="si" id="u-search" placeholder="Buscar por nome ou e-mail…" oninput="renderUsuarios()"/>
+          </div>
+          <select class="fsel" id="u-status" onchange="renderUsuarios()">
+            <option value="">Todos os status</option>
+            <option value="ativo">Ativos</option>
+            <option value="inativo">Inativos</option>
+            <option value="admin">Admins</option>
+          </select>
+          <select class="fsel" id="u-sort" onchange="renderUsuarios()">
+            <option value="criado_em">Mais recentes</option>
+            <option value="nome">Nome A-Z</option>
+            <option value="compras">+ Compras</option>
+            <option value="lucro">+ Lucro</option>
+          </select>
+          <span id="u-count" style="font-size:11px;color:var(--txt3);white-space:nowrap;"></span>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="tbl" id="tbl-users">
+            <thead><tr>
+              <th>Usuário</th>
+              <th onclick="setSortU('criado_em')">Cadastro</th>
+              <th onclick="setSortU('compras')">Compras</th>
+              <th onclick="setSortU('vendas')">Vendas</th>
+              <th onclick="setSortU('lucro')">Lucro</th>
+              <th>Status</th>
+              <th>Papel</th>
+              <th></th>
+            </tr></thead>
+            <tbody id="tbody-users"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div id="sec-planos" class="sec">
+      <div class="stat-grid" id="plano-cards" style="margin-bottom:18px;">
+        <div class="sk" style="height:110px;border-radius:var(--r)"></div>
+        <div class="sk" style="height:110px;border-radius:var(--r)"></div>
+        <div class="sk" style="height:110px;border-radius:var(--r)"></div>
+        <div class="sk" style="height:110px;border-radius:var(--r)"></div>
+      </div>
+      <div class="grid-2" style="margin-bottom:16px;">
+        <div class="card">
+          <div class="ch">
+            <div class="ch-left">
+              <div class="ch-ico" style="background:var(--gd)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/></svg></div>
+              <div><div class="ct">Funil de Conversão</div><div class="csub">Grátis → Pro</div></div>
+            </div>
+          </div>
+          <div style="padding:20px 18px;" id="plano-funnel"></div>
+        </div>
+        <div class="card">
+          <div class="ch">
+            <div class="ch-left">
+              <div class="ch-ico" style="background:var(--gold-d)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+              <div><div class="ct">Receita Recorrente</div><div class="csub">MRR estimado</div></div>
+            </div>
+          </div>
+          <div style="padding:24px 18px;text-align:center;" id="plano-mrr">
+            <div style="font-family:'Syne',sans-serif;font-size:42px;font-weight:800;color:var(--gold)" id="mrr-val">—</div>
+            <div style="font-size:12px;color:var(--txt2);margin-top:6px;">por mês (R$ 29 × usuários Pro)</div>
+            <div style="font-size:11px;color:var(--txt3);margin-top:4px;" id="mrr-anual">Receita anual estimada: —</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ch">
+          <div class="ch-left">
+            <div class="ch-ico" style="background:var(--og)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+            <div><div class="ct">Usuários por Plano</div><div class="csub">Gerencie planos individualmente</div></div>
+          </div>
+          <input class="si" id="plano-search" placeholder="Buscar usuário…" oninput="renderUsuariosPlano()" style="width:220px;padding:7px 12px;"/>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="tbl">
+            <thead><tr><th>Usuário</th><th>Plano Atual</th><th>Expira em</th><th>Compras</th><th>Ações</th></tr></thead>
+            <tbody id="tbody-planos"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card" style="margin-top:14px;">
+        <div class="ch">
+          <div class="ch-left">
+            <div class="ch-ico" style="background:var(--pd)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+            </div>
+            <div><div class="ct">Assinantes Business</div><div class="csub">Clientes com suporte via WhatsApp</div></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <button class="btn" onclick="openBusinessModal()" style="background:linear-gradient(135deg,#A855F7,#7C3AED);color:#fff;box-shadow:0 4px 14px rgba(168,85,247,0.3);font-size:11px;padding:7px 14px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:12px;height:12px"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Adicionar Business
+            </button>
+          </div>
+        </div>
+        <div id="business-subscribers"><div style="padding:24px;text-align:center;color:var(--txt3);font-size:12px">Carregando...</div></div>
+      </div>
+    </div>
+
+    <div id="sec-transacoes" class="sec">
+      <div class="grid-2" style="margin-bottom:14px;">
+        <div class="card" style="padding:16px 18px;">
+          <div style="font-size:10px;color:var(--txt3);font-weight:700;text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px;">Total de Compras</div>
+          <div style="font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:var(--orange);" id="t-total-compras">—</div>
+          <div style="font-size:11px;color:var(--txt2);" id="t-val-compras">—</div>
+        </div>
+        <div class="card" style="padding:16px 18px;">
+          <div style="font-size:10px;color:var(--txt3);font-weight:700;text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px;">Total de Vendas</div>
+          <div style="font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:var(--green);" id="t-total-vendas">—</div>
+          <div style="font-size:11px;color:var(--txt2);" id="t-val-vendas">—</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="toolbar">
+          <div class="search-w">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input class="si" id="t-search" placeholder="Buscar produto ou usuário…" oninput="renderTransacoes()"/>
+          </div>
+          <select class="fsel" id="t-tipo" onchange="renderTransacoes()"><option value="">Compras e Vendas</option><option value="compra">Só Compras</option><option value="venda">Só Vendas</option></select>
+          <select class="fsel" id="t-periodo" onchange="renderTransacoes()"><option value="">Todo período</option><option value="7">Últimos 7 dias</option><option value="30">Últimos 30 dias</option><option value="90">Últimos 90 dias</option></select>
+          <select class="fsel" id="t-canal" onchange="renderTransacoes()"><option value="">Todos os canais</option><option value="OLX">OLX</option><option value="Mercado Livre">Mercado Livre</option><option value="Shopee">Shopee</option><option value="Instagram">Instagram</option><option value="WhatsApp">WhatsApp</option><option value="Loja Física">Loja Física</option></select>
+          <select class="fsel" id="t-usuario" onchange="renderTransacoes()"><option value="">Todos os usuários</option></select>
+          <button class="btn bg_" onclick="exportTransacoesCSV()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Exportar CSV
+          </button>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="tbl"><thead><tr><th>Tipo</th><th>Produto</th><th>Usuário</th><th>Valor</th><th>Lucro</th><th>Data</th><th>Canal</th></tr></thead><tbody id="tbody-transacoes"></tbody></table>
+        </div>
+      </div>
+    </div>
+
+    <div id="sec-ranking" class="sec">
+      <div class="grid-3" id="ranking-cards" style="margin-bottom:18px;"></div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="ch"><div class="ch-left"><div class="ch-ico" style="background:var(--gold-d)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div><div><div class="ct">Ranking por Lucro</div><div class="csub">Total acumulado</div></div></div></div>
+          <div id="rank-lucro" style="padding:8px 0;"></div>
+        </div>
+        <div class="card">
+          <div class="ch"><div class="ch-left"><div class="ch-ico" style="background:var(--bd)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/></svg></div><div><div class="ct">Ranking por Volume</div><div class="csub">Número de vendas</div></div></div></div>
+          <div id="rank-volume" style="padding:8px 0;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="sec-anomalias" class="sec">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+        <div style="font-size:11px;color:var(--txt2)">Verificação automática em tempo real</div>
+        <button class="btn bg_" onclick="loadAnomalias()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+          Atualizar
+        </button>
+      </div>
+      <div id="anomalias-list"></div>
+    </div>
+
+    <div id="sec-retencao" class="sec">
+      <div class="stat-grid" id="ret-metrics" style="grid-template-columns:repeat(3,1fr);margin-bottom:16px;"></div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="ch"><div class="ch-left"><div class="ch-ico" style="background:var(--gd)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div><div class="ct">Retenção Mensal</div><div class="csub">% de usuários que voltaram</div></div></div></div>
+          <div style="padding:18px 16px;">
+            <div class="bar-chart" id="ret-chart" style="height:110px;"></div>
+            <div id="ret-labels" style="display:flex;gap:4px;margin-top:4px;"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ch"><div class="ch-left"><div class="ch-ico" style="background:var(--pd)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div><div><div class="ct">Funil de Retenção</div><div class="csub">Usuários que retornaram por período</div></div></div></div>
+          <div style="padding:18px 16px;" id="ret-funnel"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="sec-logs" class="sec">
+      <div class="card">
+        <div class="toolbar">
+          <div class="search-w">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input class="si" id="log-search" placeholder="Buscar nos logs…" oninput="renderLogs()"/>
+          </div>
+          <select class="fsel" id="log-tipo" onchange="renderLogs()"><option value="">Todos os eventos</option><option value="login">Logins</option><option value="cadastro">Cadastros</option><option value="compra">Compras</option><option value="venda">Vendas</option><option value="erro_login">Erros de Login</option><option value="logout">Logouts</option><option value="delete_compra">Deleções</option></select>
+          <select class="fsel" id="log-sucesso" onchange="renderLogs()"><option value="">Todos</option><option value="1">Sucesso</option><option value="0">Falhas</option></select>
+          <button class="btn bg_" onclick="exportLogs()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Exportar CSV
+          </button>
+        </div>
+        <div id="log-list" style="max-height:calc(100vh - 280px);overflow-y:auto;"></div>
+      </div>
+    </div>
+
+    <div id="sec-sistema" class="sec">
+      <div class="grid-2" style="margin-bottom:14px;">
+        <div class="card" style="padding:20px;">
+          <div style="font-size:10px;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.7px;margin-bottom:14px;">Informações da API</div>
+          <div id="sys-api"></div>
+        </div>
+        <div class="card" style="padding:20px;">
+          <div style="font-size:10px;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.7px;margin-bottom:14px;">Banco de Dados</div>
+          <div id="sys-db"></div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card" style="padding:20px;">
+          <div style="font-size:10px;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.7px;margin-bottom:14px;">Ações do Sistema</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <button class="btn bg_" style="justify-content:flex-start;gap:10px;" onclick="sysExportAll()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              Exportar todos os dados (JSON)
+            </button>
+            <button class="btn bg_" style="justify-content:flex-start;gap:10px;" onclick="sysClearLogs()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>
+              Limpar logs de acesso
+            </button>
+            <button class="btn bg_" style="justify-content:flex-start;gap:10px;" onclick="sysResetOnboarding()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+              Resetar onboarding (dev)
+            </button>
+          </div>
+        </div>
+        <div class="card" style="padding:20px;">
+          <div style="font-size:10px;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.7px;margin-bottom:14px;">Status dos Serviços</div>
+          <div id="sys-status" style="display:flex;flex-direction:column;gap:10px;"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="detail-panel" id="detail-panel">
+  <div class="dp-head">
+    <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:800;">Detalhes do Usuário</div>
+    <button class="mc2" onclick="closeDetail()">×</button>
+  </div>
+  <div class="dp-body" id="dp-body"></div>
+</div>
+
+<div class="ov" id="ov-user">
+  <div class="mod" style="max-width:460px;">
+    <div class="mh">
+      <div><div class="mt2" id="um-title">Novo Usuário</div><div class="ms" id="um-sub">Crie uma conta manualmente</div></div>
+      <button class="mc2" onclick="cOv('ov-user')">×</button>
+    </div>
+    <div class="mb">
+      <div class="fg"><label class="fl">Nome completo</label><input class="fi" id="um-nome" placeholder="João Silva"/></div>
+      <div class="fg"><label class="fl">E-mail</label><input class="fi" id="um-email" type="email" placeholder="joao@email.com"/></div>
+      <div class="fg" id="um-senha-wrap"><label class="fl">Senha</label><input class="fi" id="um-senha" type="password" placeholder="Mínimo 6 caracteres"/></div>
+      <div class="fg"><label class="fl">Papel</label><select class="fs" id="um-role"><option value="user">Usuário</option><option value="admin">Administrador</option></select></div>
+      <div class="fg"><label class="fl">Status</label><select class="fs" id="um-ativo"><option value="1">Ativo</option><option value="0">Inativo</option></select></div>
+    </div>
+    <div class="mf">
+      <button class="btn bg_" onclick="cOv('ov-user')">Cancelar</button>
+      <button class="btn bp" id="um-btn" onclick="saveUser()">Criar usuário</button>
+    </div>
+  </div>
+</div>
+
+<div class="ov" id="ov-business">
+  <div class="mod" style="max-width:480px;">
+    <div class="mh" style="border-bottom:1px solid rgba(168,85,247,0.2);">
+      <div>
+        <div class="mt2" style="color:var(--purple)">🏢 Adicionar Plano Business</div>
+        <div class="ms">Ative o plano Business para um usuário manualmente</div>
+      </div>
+      <button class="mc2" onclick="cOv('ov-business')">×</button>
+    </div>
+    <div class="mb">
+      <div class="fg">
+        <label class="fl">Buscar usuário</label>
+        <div style="position:relative;">
+          <input class="fi" id="biz-search" placeholder="Nome ou e-mail..." oninput="bizSearchUsers()" autocomplete="off"/>
+          <div id="biz-dropdown" style="display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--rs);max-height:200px;overflow-y:auto;z-index:99;box-shadow:0 12px 40px rgba(0,0,0,0.5);"></div>
+        </div>
+      </div>
+      <div id="biz-selected" style="display:none;background:rgba(168,85,247,0.07);border:1px solid rgba(168,85,247,0.2);border-radius:var(--rs);padding:12px 14px;margin-bottom:14px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div id="biz-sel-av" style="width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;flex-shrink:0;"></div>
+          <div style="flex:1;min-width:0;">
+            <div id="biz-sel-nome" style="font-size:13px;font-weight:700;"></div>
+            <div id="biz-sel-email" style="font-size:11px;color:var(--txt3);"></div>
+          </div>
+          <div id="biz-sel-plano" style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;"></div>
+          <button onclick="bizClearUser()" style="background:none;border:none;cursor:pointer;color:var(--txt3);font-size:16px;padding:0 4px;">×</button>
+        </div>
+      </div>
+      <div class="fg">
+        <label class="fl">Duração do plano</label>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;" id="biz-dur-grid">
+          <div class="biz-dur-btn active" data-dias="30" onclick="bizSelectDur(this)"><div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800;">30</div><div style="font-size:10px;">dias</div></div>
+          <div class="biz-dur-btn" data-dias="60" onclick="bizSelectDur(this)"><div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800;">60</div><div style="font-size:10px;">dias</div></div>
+          <div class="biz-dur-btn" data-dias="90" onclick="bizSelectDur(this)"><div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800;">90</div><div style="font-size:10px;">dias</div></div>
+          <div class="biz-dur-btn" data-dias="365" onclick="bizSelectDur(this)"><div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800;">365</div><div style="font-size:10px;">dias</div></div>
+        </div>
+      </div>
+      <div style="background:var(--bg4);border:1px solid var(--border2);border-radius:var(--rs);padding:13px 16px;">
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px;"><span style="color:var(--txt2);">Plano</span><span style="font-weight:700;color:var(--purple);">Business 🏢</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px;"><span style="color:var(--txt2);">Duração</span><span style="font-weight:700;" id="biz-res-dur">30 dias</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;"><span style="color:var(--txt2);">Expira em</span><span style="font-weight:700;" id="biz-res-exp">—</span></div>
+      </div>
+    </div>
+    <div class="mf">
+      <button class="btn bg_" onclick="cOv('ov-business')">Cancelar</button>
+      <button class="btn" id="biz-btn-save" onclick="saveBusiness()" style="background:linear-gradient(135deg,#A855F7,#7C3AED);color:#fff;box-shadow:0 4px 14px rgba(168,85,247,0.3);">🏢 Ativar Business</button>
+    </div>
+  </div>
+</div>
+
+<div class="ov" id="ov-confirm">
+  <div style="background:var(--bg2);border:1px solid var(--border2);border-radius:var(--rl);width:400px;max-width:95vw;padding:28px;box-shadow:0 30px 80px rgba(0,0,0,0.6);text-align:center;animation:su .3s cubic-bezier(.34,1.56,.64,1);">
+    <div id="cf-ico" style="width:52px;height:52px;border-radius:50%;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;"></div>
+    <div style="font-family:'Syne',sans-serif;font-size:17px;font-weight:800;margin-bottom:8px;" id="cf-title"></div>
+    <div style="font-size:13px;color:var(--txt2);line-height:1.6;margin-bottom:24px;" id="cf-msg"></div>
+    <div style="display:flex;gap:10px;justify-content:center;">
+      <button class="btn bg_" onclick="cOv('ov-confirm');_cfResolve(false)" style="min-width:100px;">Cancelar</button>
+      <button class="btn" id="cf-ok" style="min-width:100px;"></button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><div class="td" id="tdot"></div><span id="tmsg"></span></div>
+
+<script src="static/js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<title>BriqueOS — Perfil</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="static/css/base.css"/>
+<link rel="stylesheet" href="static/css/perfil.css"/>
+</head>
+<body>
+
+<div class="sidebar-overlay" id="sb-overlay" onclick="closeSidebar()"></div>
+
+<div class="sidebar" id="sidebar">
+  <div class="logo-wrap">
+    <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#FF6B2B,#FF3D00);display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(255,107,43,0.35);flex-shrink:0;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+        <polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+    </div>
+    <span style="font-family:'Syne',sans-serif;font-size:18px;font-weight:800;letter-spacing:-0.5px;">Brique<span style="color:var(--orange);">OS</span></span>
+  </div>
+  <nav>
+    <div class="ng">App</div>
+    <div class="ni" onclick="irParaApp()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Dashboard
+    </div>
+    <div class="ni" onclick="irParaApp()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      Compras
+    </div>
+    <div class="ni" onclick="irParaApp()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+      Vendas
+    </div>
+    <div class="ng">Minha Conta</div>
+    <div class="ni active" id="nav-perfil" onclick="gotoSection('perfil', this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Meu Perfil
+    </div>
+    <div class="ni" id="nav-seguranca" onclick="gotoSection('seguranca', this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      Segurança
+    </div>
+    <div class="ni" id="nav-plano" onclick="gotoSection('plano', this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      Meu Plano
+    </div>
+  </nav>
+  <div class="sidebar-foot">
+    <div class="sf-user" onclick="irParaApp()">
+      <div class="sf-av" id="sf-av">
+        <img id="sf-img" src="" alt=""/>
+        <span id="sf-init"></span>
+      </div>
+      <div class="sf-info">
+        <div class="sf-name" id="sf-nome">Carregando...</div>
+        <div class="sf-role" id="sf-plano-label">Revendedor</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="topbar">
+    <button class="hamburger" onclick="toggleSidebar()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <div class="topbar-back" onclick="irParaApp()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      Voltar ao app
+    </div>
+    <div class="page-t" id="page-title">Meu Perfil</div>
+  </div>
+
+  <div class="content">
+    <div class="profile-hero">
+      <div class="avatar-zone">
+        <label for="avatar-input" style="display:block;cursor:pointer;">
+          <div class="avatar-ring">
+            <div class="avatar-inner">
+              <img id="hero-img" src="" alt="avatar"/>
+              <span class="avatar-initials" id="hero-init">?</span>
+            </div>
+            <div class="avatar-overlay">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+              <span>Trocar</span>
+            </div>
+          </div>
+        </label>
+        <div class="avatar-badge" onclick="document.getElementById('avatar-input').click()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        </div>
+        <input type="file" id="avatar-input" accept="image/*" onchange="handleAvatarChange(this)"/>
+      </div>
+      <div class="hero-info">
+        <div class="hi-greeting">Olá, bem-vindo</div>
+        <div class="hi-name" id="hero-nome">Carregando...</div>
+        <div class="hi-email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+          <span id="hero-email">—</span>
+        </div>
+        <div class="upload-prog" id="upload-prog">
+          <div class="up-bar-wrap"><div class="up-bar" id="up-bar"></div></div>
+          <div class="up-label" id="up-label">Enviando foto...</div>
+        </div>
+      </div>
+      <div class="hero-meta">
+        <div class="hm-chip orange" id="plano-chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          Grátis
+        </div>
+        <div class="hm-chip green">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          Verificado
+        </div>
+        <div class="hm-since" id="hm-since">Membro desde —</div>
+      </div>
+    </div>
+
+    <div id="sec-perfil" class="psec active">
+      <div class="pcard">
+        <div class="pcard-head">
+          <div class="pcard-ico orange">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          </div>
+          <div>
+            <div class="pcard-title">Informações Pessoais</div>
+            <div class="pcard-sub">Edite seu nome de exibição</div>
+          </div>
+        </div>
+        <div class="pcard-body">
+          <div class="alert err" id="nome-err">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <span id="nome-err-txt"></span>
+          </div>
+          <div class="alert ok" id="nome-ok">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Nome atualizado com sucesso!
+          </div>
+          <div class="fg">
+            <label class="fl">E-mail (não editável)</label>
+            <input class="fi" id="f-email" type="text" disabled style="opacity:.45;cursor:not-allowed;" placeholder="—"/>
+          </div>
+          <div class="fg">
+            <label class="fl">Nome de exibição <span class="fl-badge">Editável</span></label>
+            <input class="fi" id="f-nome" type="text" placeholder="Seu nome completo"/>
+          </div>
+          <button class="btn bp btn-full" id="btn-nome" onclick="salvarNome()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Salvar nome
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="sec-seguranca" class="psec">
+      <div class="pcard">
+        <div class="pcard-head">
+          <div class="pcard-ico red">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          </div>
+          <div>
+            <div class="pcard-title">Segurança da Conta</div>
+            <div class="pcard-sub">Altere sua senha de acesso</div>
+          </div>
+        </div>
+        <div class="pcard-body">
+          <div class="alert err" id="senha-err">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <span id="senha-err-txt"></span>
+          </div>
+          <div class="alert ok" id="senha-ok">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Senha alterada com sucesso!
+          </div>
+          <div class="fg">
+            <label class="fl">Senha atual <span class="fl-badge" style="background:var(--rd);color:var(--red);">Obrigatória</span></label>
+            <div class="fi-wrap">
+              <input class="fi has-icon" id="s-atual" type="password" placeholder="Digite sua senha atual"/>
+              <button class="fi-eye" type="button" onclick="togglePw('s-atual',this)" tabindex="-1">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="divider"></div>
+          <div class="fg">
+            <label class="fl">Nova senha</label>
+            <div class="fi-wrap">
+              <input class="fi has-icon" id="s-nova" type="password" placeholder="Mínimo 6 caracteres" oninput="checkStrength(this.value)"/>
+              <button class="fi-eye" type="button" onclick="togglePw('s-nova',this)" tabindex="-1">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+            <div class="pw-strength" id="pw-strength">
+              <div class="pw-bars">
+                <div class="pw-bar" id="pb1"></div>
+                <div class="pw-bar" id="pb2"></div>
+                <div class="pw-bar" id="pb3"></div>
+                <div class="pw-bar" id="pb4"></div>
+              </div>
+              <div class="pw-label" id="pw-label">—</div>
+            </div>
+          </div>
+          <div class="fg">
+            <label class="fl">Confirmar nova senha</label>
+            <div class="fi-wrap">
+              <input class="fi has-icon" id="s-conf" type="password" placeholder="Repita a nova senha" oninput="checkConfirm()"/>
+              <button class="fi-eye" type="button" onclick="togglePw('s-conf',this)" tabindex="-1">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+            <div id="conf-hint" style="font-size:10px;margin-top:3px;display:none;"></div>
+          </div>
+          <button class="btn bp btn-full" id="btn-senha" onclick="salvarSenha()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            Alterar senha
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="sec-plano" class="psec">
+      <div class="pcard" id="plano-card">
+        <div class="pcard-head">
+          <div class="pcard-ico" id="plano-ico-wrap" style="background:var(--og);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <div>
+            <div class="pcard-title">Meu Plano</div>
+            <div class="pcard-sub" id="plano-sub">Carregando...</div>
+          </div>
+          <div style="margin-left:auto;"><span id="plano-badge" style="font-size:11px;font-weight:700;padding:4px 14px;border-radius:20px;display:inline-block;"></span></div>
+        </div>
+        <div class="pcard-body" id="plano-body"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toast-wrap"></div>
+
+<script src="static/js/perfil.js"></script>
+</body>
+</html>

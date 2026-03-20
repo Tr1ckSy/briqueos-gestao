@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#0D1117"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="BriqueOS"/>
+<link rel="manifest" href="manifest.json"/>
+<title>BriqueOS</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="static/css/base.css"/>
+<link rel="stylesheet" href="static/css/index.css"/>
+</head>
+<body>
+
+<div class="sidebar-overlay" id="sb-overlay" onclick="closeSidebar()"></div>
+
+<aside class="sidebar" id="sidebar">
+  <div class="logo-wrap">
+    <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#FF6B2B,#FF3D00);display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(255,107,43,0.35);flex-shrink:0;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+        <polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+    </div>
+    <span style="font-family:'Syne',sans-serif;font-size:18px;font-weight:800;letter-spacing:-0.5px;">Brique<span style="color:var(--orange);">OS</span></span>
+  </div>
+  <div class="lv-card">
+    <div class="lv-badge" id="sb-badge">Nível 1</div>
+    <div class="lv-name" id="sb-lname">Iniciante</div>
+    <div class="lv-xp" id="sb-xp">R$ 0 / R$ 500 de lucro</div>
+    <div class="lv-track"><div class="lv-fill" id="sb-fill" style="width:0%"></div></div>
+    <div class="lv-next" id="sb-next">Próximo: Aprendiz</div>
+  </div>
+  <nav>
+    <div class="ng">Principal</div>
+    <div class="ni active" onclick="goto('dashboard',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Dashboard
+    </div>
+    <div class="ni" onclick="goto('niveis',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      Níveis & XP
+    </div>
+    <div class="ng">Estoque</div>
+    <div class="ni" onclick="goto('produtos',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+      Produtos <span class="nb" id="nb-p">0</span>
+    </div>
+    <div class="ng">Financeiro</div>
+    <div class="ni" onclick="goto('compras',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      Compras <span class="nb" id="nb-c">0</span>
+    </div>
+    <div class="ni" onclick="goto('vendas',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+      Vendas <span class="nb" id="nb-v">0</span>
+    </div>
+    <div class="ni" onclick="goto('relatorios',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      Relatórios
+    </div>
+    <div class="ng">Conta</div>
+    <div class="ni" onclick="window.location.href='perfil.html'">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Meu Perfil
+    </div>
+    <div class="ni" id="ni-equipe" onclick="goto('equipe',this)" style="display:none;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      Minha Equipe
+      <span class="nb" id="nb-equipe" style="background:rgba(168,85,247,0.15);color:#A855F7;border-color:rgba(168,85,247,0.3);display:none;">0</span>
+    </div>
+    <div class="ni" onclick="logout()" style="color:var(--red)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      Sair
+    </div>
+  </nav>
+  <div class="sidebar-foot">
+    <div class="sf-user" onclick="window.location.href='perfil.html'" title="Ver perfil">
+      <div class="sf-av" id="sf-av">
+        <img id="sf-img" src="" alt="" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:50%;"/>
+        <span id="sf-init"></span>
+      </div>
+      <div class="sf-info">
+        <div class="sf-name" id="sf-nome">—</div>
+        <div class="sf-role">Ver meu perfil →</div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<div class="main">
+  <div class="topbar">
+    <button class="hamburger" onclick="toggleSidebar()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <span class="page-t" id="ptitle">Dashboard</span>
+    <div id="tbtns"></div>
+    <button class="theme-btn tb-desktop" onclick="toggleTheme()" id="theme-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+    </button>
+    <button class="notif-btn tb-desktop" onclick="toggleHist()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    </button>
+    <button class="notif-btn" onclick="toggleNotif()" id="notif-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+      <div class="notif-dot" id="notif-dot"></div>
+    </button>
+    <button class="notif-btn tb-desktop" onclick="oOv('ov-backup')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+    </button>
+  </div>
+  <div class="content">
+
+    <div id="alertas-bar" style="display:none;margin-bottom:14px;"></div>
+
+    <div id="sec-dashboard" class="sec active">
+      <div class="hero">
+        <div>
+          <div class="hero-g">Painel de Controle</div>
+          <div class="hero-h">Olá, <span id="h-username">—</span></div>
+          <div class="hlb">
+            <span class="hlb-lbl" id="hl-n">Iniciante</span>
+            <div class="hlb-t"><div class="hlb-f" id="hl-f" style="width:0%"></div></div>
+            <span class="hlb-p" id="hl-p">0%</span>
+            <span class="hlb-nx" id="hl-nx">→ Aprendiz</span>
+          </div>
+          <div class="goal-bar" id="goal-bar">
+            <div class="goal-row">
+              <span class="goal-lbl" id="goal-lbl">Meta mensal: não definida</span>
+              <div class="goal-track"><div class="goal-fill" id="goal-fill" style="width:0%"></div></div>
+              <span class="goal-pct" id="goal-pct"></span>
+              <button class="goal-edit" onclick="openGoalModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="hero-r">
+          <div class="hero-val" id="h-lucro">R$ 0</div>
+          <div class="hero-lbl">lucro total acumulado</div>
+        </div>
+      </div>
+      <div class="mtr8" id="dash-m"></div>
+      <div class="cr" style="grid-template-columns:1fr 1fr;margin-bottom:14px;">
+        <div class="card">
+          <div class="ch">
+            <div class="ch-left">
+              <div class="ch-ico" style="background:var(--bd)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+              <div><div class="ct">Receita por Mês</div><div class="csub" id="c-range">—</div></div>
+            </div>
+            <div id="chart-legend" style="display:flex;gap:12px;"></div>
+          </div>
+          <div class="cb"><div class="brs" id="c-bars"></div></div>
+        </div>
+        <div class="card">
+          <div class="ch">
+            <div class="ch-left">
+              <div class="ch-ico" style="background:var(--gd)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
+              <div><div class="ct">Lucro Acumulado</div><div class="csub" id="cum-sub">Evolução mensal</div></div>
+            </div>
+          </div>
+          <div class="cb" style="padding:14px 18px;"><div id="cum-chart"></div></div>
+        </div>
+      </div>
+      <div class="cr3" style="margin-bottom:14px;">
+        <div class="card">
+          <div class="ch">
+            <div class="ch-left">
+              <div class="ch-ico" style="background:var(--gold-d)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+              <div><div class="ct">Top Categorias</div><div class="csub">Por lucro</div></div>
+            </div>
+          </div>
+          <div class="rk" id="d-rank"></div>
+        </div>
+        <div class="card">
+          <div class="ch">
+            <div class="ch-left">
+              <div class="ch-ico" style="background:var(--og)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg></div>
+              <div><div class="ct">Estoque por Categoria</div><div class="csub" id="stock-sub">Itens em estoque</div></div>
+            </div>
+          </div>
+          <div id="stock-dist" style="padding:14px 16px;display:flex;flex-direction:column;gap:8px;"></div>
+        </div>
+        <div class="card">
+          <div class="ch">
+            <div class="ch-left">
+              <div class="ch-ico" style="background:var(--gd)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+              <div><div class="ct">Últimas Vendas</div><div class="csub">Mais recentes</div></div>
+            </div>
+          </div>
+          <table class="mt" id="dt-v"><thead><tr><th>Item</th><th>Valor</th><th>Lucro</th></tr></thead><tbody></tbody></table>
+        </div>
+      </div>
+      <div class="cr3">
+        <div class="card">
+          <div class="ch">
+            <div class="ch-left">
+              <div class="ch-ico" style="background:var(--bd)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+              <div><div class="ct">Indicadores</div><div class="csub">Métricas avançadas</div></div>
+            </div>
+          </div>
+          <div id="adv-metrics" style="padding:14px 16px;display:flex;flex-direction:column;gap:8px;"></div>
+        </div>
+        <div class="card">
+          <div class="ch">
+            <div class="ch-left">
+              <div class="ch-ico" style="background:var(--og)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></div>
+              <div><div class="ct">Últimas Compras</div><div class="csub">Mais recentes</div></div>
+            </div>
+          </div>
+          <table class="mt" id="dt-c"><thead><tr><th>Item</th><th>Custo</th><th>Status</th></tr></thead><tbody></tbody></table>
+        </div>
+        <div class="card">
+          <div class="ch">
+            <div class="ch-left">
+              <div class="ch-ico" style="background:var(--rd)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+              <div><div class="ct">Giro de Produtos</div><div class="csub">Por categoria</div></div>
+            </div>
+          </div>
+          <div id="giro-chart" style="padding:14px 16px;display:flex;flex-direction:column;gap:8px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="sec-niveis" class="sec">
+      <div class="card" style="margin-bottom:18px;">
+        <div class="ch">
+          <div><div class="ct">Sua Progressão</div><div class="csub" id="np-s">—</div></div>
+          <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--orange)" id="np-v">—</div>
+        </div>
+        <div class="cb">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <span style="font-size:11px;color:var(--txt2)" id="np-l1">—</span>
+            <div style="flex:1;height:8px;background:rgba(255,255,255,0.06);border-radius:5px;overflow:hidden;"><div style="height:100%;border-radius:5px;background:linear-gradient(90deg,var(--orange),var(--orange2));box-shadow:0 0 10px var(--orange);transition:width .8s ease" id="np-b"></div></div>
+            <span style="font-size:11px;color:var(--txt2)" id="np-l2">—</span>
+            <span style="font-family:'Syne',sans-serif;font-size:13px;font-weight:800;color:var(--orange)" id="np-p">—</span>
+          </div>
+        </div>
+      </div>
+      <div class="lg" id="lv-grid"></div>
+    </div>
+
+    <div id="sec-produtos" class="sec">
+      <div class="sec-toolbar">
+        <div class="search-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input class="search-inp" id="prod-search" placeholder="Buscar produto..." oninput="rProdFiltered()"/>
+        </div>
+        <select class="filter-sel" id="prod-cat" onchange="rProdFiltered()">
+          <option value="">Todas categorias</option>
+          <option>Eletrônicos</option><option>Roupas</option><option>Calçados</option><option>Móveis</option><option>Games</option><option>Celulares</option><option>Acessórios</option><option>Outros</option>
+        </select>
+        <select class="filter-sel" id="prod-cond" onchange="rProdFiltered()">
+          <option value="">Toda condição</option>
+          <option>Novo</option><option>Seminovo</option><option>Bom</option><option>Regular</option><option>Ruim</option>
+        </select>
+        <span class="result-count" id="prod-count"></span>
+      </div>
+      <div class="pg" id="prod-g"></div>
+    </div>
+
+    <div id="sec-compras" class="sec">
+      <div class="sec-toolbar">
+        <div class="search-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input class="search-inp" id="co-search" placeholder="Buscar compra..." oninput="rCTFiltered()"/>
+        </div>
+        <select class="filter-sel" id="co-cat" onchange="rCTFiltered()">
+          <option value="">Todas categorias</option>
+          <option>Eletrônicos</option><option>Roupas</option><option>Calçados</option><option>Móveis</option><option>Games</option><option>Celulares</option><option>Acessórios</option><option>Outros</option>
+        </select>
+        <select class="filter-sel" id="co-status" onchange="rCTFiltered()">
+          <option value="">Todos status</option>
+          <option value="estoque">Em Estoque</option>
+          <option value="vendido">Vendido</option>
+        </select>
+        <button class="btn bg bs" onclick="exportCSV('compras')" style="white-space:nowrap">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          CSV
+        </button>
+        <span class="result-count" id="co-count"></span>
+      </div>
+      <div class="card"><div style="overflow-x:auto"><table class="dt" id="tb-co">
+        <thead><tr>
+          <th onclick="sortTable('co','titulo')">Item</th>
+          <th onclick="sortTable('co','categoria')">Categoria</th>
+          <th>Condição</th>
+          <th onclick="sortTable('co','custo_total')">Custo</th>
+          <th>Pagamento</th>
+          <th>Fonte</th>
+          <th onclick="sortTable('co','data_compra')">Data</th>
+          <th>Status</th>
+          <th>Ações</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table></div>
+      <div class="pagination" id="pag-co"></div>
+      </div>
+    </div>
+
+    <div id="sec-vendas" class="sec">
+      <div class="sec-toolbar">
+        <div class="search-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input class="search-inp" id="ve-search" placeholder="Buscar venda..." oninput="rVTFiltered()"/>
+        </div>
+        <select class="filter-sel" id="ve-canal" onchange="rVTFiltered()">
+          <option value="">Todos canais</option>
+          <option>OLX</option><option>Mercado Livre</option><option>Shopee</option><option>Instagram</option><option>WhatsApp</option><option>Loja Física</option><option>Outro</option>
+        </select>
+        <button class="btn bg bs" onclick="exportCSV('vendas')" style="white-space:nowrap">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          CSV
+        </button>
+        <span class="result-count" id="ve-count"></span>
+      </div>
+      <div class="card"><div style="overflow-x:auto"><table class="dt" id="tb-ve">
+        <thead><tr>
+          <th>Item</th><th>Custo</th><th onclick="sortTable('ve','preco_venda')">Venda</th>
+          <th onclick="sortTable('ve','lucro')">Lucro</th><th>ROI</th>
+          <th>Canal</th><th onclick="sortTable('ve','data_venda')">Data</th><th>Ações</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table></div>
+      <div class="pagination" id="pag-ve"></div>
+      </div>
+    </div>
+
+    <div id="sec-relatorios" class="sec">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap;">
+        <div style="display:flex;align-items:center;gap:6px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--rs);padding:4px;">
+          <button class="rel-per-btn active" onclick="setRelPeriod('mes',this)">Este mês</button>
+          <button class="rel-per-btn" onclick="setRelPeriod('trim',this)">Trimestre</button>
+          <button class="rel-per-btn" onclick="setRelPeriod('semestre',this)">Semestre</button>
+          <button class="rel-per-btn" onclick="setRelPeriod('ano',this)">Ano</button>
+          <button class="rel-per-btn" onclick="setRelPeriod('tudo',this)">Tudo</button>
+        </div>
+        <div style="display:flex;gap:8px;margin-left:auto;">
+          <button class="btn bg bs" onclick="exportCSV('compras')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            CSV Compras
+          </button>
+          <button class="btn bg bs" onclick="exportCSV('vendas')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            CSV Vendas
+          </button>
+          <button class="btn bp bs" onclick="printRelatorio()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            Imprimir / PDF
+          </button>
+        </div>
+      </div>
+      <div class="mtr8" id="rel-kpis" style="margin-bottom:18px;"></div>
+      <div class="cr" style="grid-template-columns:1fr 1fr;margin-bottom:14px;">
+        <div class="card">
+          <div class="ch">
+            <div class="ch-left">
+              <div class="ch-ico" style="background:var(--bd)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+              <div><div class="ct">Receita x Lucro</div><div class="csub" id="rel-chart-sub">Por mês</div></div>
+            </div>
+          </div>
+          <div class="cb"><div id="rel-barchart"></div></div>
+        </div>
+        <div class="card">
+          <div class="ch">
+            <div class="ch-left">
+              <div class="ch-ico" style="background:var(--gold-d)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+              <div><div class="ct">Distribuição de Lucro</div><div class="csub">Por categoria no período</div></div>
+            </div>
+          </div>
+          <div class="cb" style="display:flex;align-items:center;justify-content:center;gap:24px;flex-wrap:wrap;">
+            <div id="rel-donut"></div>
+            <div id="rel-donut-legend" style="display:flex;flex-direction:column;gap:7px;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="cr" style="grid-template-columns:1fr 1fr;margin-bottom:14px;">
+        <div class="card">
+          <div class="ch">
+            <div class="ch-left">
+              <div class="ch-ico" style="background:var(--gd)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/></svg></div>
+              <div><div class="ct">Top Produtos Vendidos</div><div class="csub" id="rel-top-sub">Maior lucro no período</div></div>
+            </div>
+          </div>
+          <div style="overflow-x:auto">
+            <table class="dt" id="rel-top-table">
+              <thead><tr><th>#</th><th>Produto</th><th>Custo</th><th>Venda</th><th>Lucro</th><th>ROI</th><th>Dias</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ch">
+            <div class="ch-left">
+              <div class="ch-ico" style="background:var(--og)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg></div>
+              <div><div class="ct">Estoque Parado</div><div class="csub">Produtos sem venda há mais de 30 dias</div></div>
+            </div>
+          </div>
+          <div style="overflow-x:auto">
+            <table class="dt" id="rel-parado-table">
+              <thead><tr><th>Produto</th><th>Categoria</th><th>Custo</th><th>Dias parado</th><th>Ação</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="cr" style="grid-template-columns:1fr 1fr;">
+        <div class="card">
+          <div class="ch">
+            <div class="ch-left">
+              <div class="ch-ico" style="background:var(--bd)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+              <div><div class="ct">Por Canal de Venda</div><div class="csub">Receita e quantidade</div></div>
+            </div>
+          </div>
+          <div id="rel-canal" style="padding:14px 16px;display:flex;flex-direction:column;gap:8px;"></div>
+        </div>
+        <div class="card">
+          <div class="ch">
+            <div class="ch-left">
+              <div class="ch-ico" style="background:var(--rd)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+              <div><div class="ct">Evolução Mensal</div><div class="csub" id="rel-evo-sub">Compras vs Vendas</div></div>
+            </div>
+          </div>
+          <div class="cb"><div id="rel-evo"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="sec-equipe" class="sec">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:800;margin-bottom:4px;">Minha Equipe</div>
+          <div style="font-size:12px;color:var(--txt2);">Gerencie os membros da sua conta Business — até 4 convidados</div>
+        </div>
+        <span id="eq-counter-main" style="font-size:11px;font-weight:700;color:#A855F7;background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.22);padding:5px 14px;border-radius:20px;">0 / 4 membros</span>
+      </div>
+      <div class="card" id="eq-convidar-card" style="margin-bottom:14px;">
+        <div class="ch">
+          <div class="ch-left">
+            <div class="ch-ico" style="background:rgba(168,85,247,0.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#A855F7" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </div>
+            <div><div class="ct">Convidar novo membro</div><div class="csub">O convidado receberá um email com a senha temporária</div></div>
+          </div>
+        </div>
+        <div style="padding:18px 20px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:flex-end;">
+            <div>
+              <label style="font-size:10px;font-weight:700;color:var(--txt2);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px;">Nome</label>
+              <input class="search-inp" id="eq-nome-main" placeholder="João Silva" style="padding:9px 13px;"/>
+            </div>
+            <div>
+              <label style="font-size:10px;font-weight:700;color:var(--txt2);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px;">E-mail</label>
+              <input class="search-inp" id="eq-email-main" type="email" placeholder="joao@email.com" style="padding:9px 13px;"/>
+            </div>
+            <button class="btn" id="eq-btn-main" onclick="eqConvidar()" style="background:linear-gradient(135deg,#A855F7,#7C3AED);color:#fff;box-shadow:0 4px 14px rgba(168,85,247,0.3);white-space:nowrap;padding:9px 18px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Enviar convite
+            </button>
+          </div>
+          <div id="eq-alert-main" style="display:none;margin-top:12px;padding:10px 13px;border-radius:var(--rs);font-size:12px;display:flex;align-items:center;gap:8px;"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ch">
+          <div class="ch-left">
+            <div class="ch-ico" style="background:rgba(168,85,247,0.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#A855F7" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            </div>
+            <div><div class="ct">Membros da equipe</div><div class="csub">Contas com acesso compartilhado ao Business</div></div>
+          </div>
+          <button class="btn bg" style="padding:6px 12px;font-size:11px;" onclick="eqCarregar()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+            Atualizar
+          </button>
+        </div>
+        <div id="eq-lista-main" style="min-height:80px;"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="onboarding" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:1000;backdrop-filter:blur(4px);align-items:flex-end;justify-content:center;padding:0;">
+  <div style="background:var(--bg2);border:1px solid var(--border2);border-radius:24px 24px 0 0;width:100%;max-width:480px;overflow:hidden;animation:sheetUp .35s cubic-bezier(.32,1,.4,1);">
+    <div style="height:3px;background:var(--border);"><div id="ob-progress" style="height:100%;background:var(--orange);transition:width .4s ease;border-radius:2px;width:33%"></div></div>
+    <div style="padding:28px 24px 24px;">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px;">
+        <div id="ob-ico" style="width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--og);"></div>
+        <div>
+          <div id="ob-step" style="font-size:11px;color:var(--txt3);font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px;">Passo 1 de 3</div>
+          <div id="ob-title" style="font-family:'Syne',sans-serif;font-size:18px;font-weight:800;line-height:1.2;"></div>
+        </div>
+      </div>
+      <div id="ob-desc" style="font-size:13px;color:var(--txt2);line-height:1.7;margin-bottom:22px;"></div>
+      <div style="display:flex;gap:6px;margin-bottom:22px;">
+        <div id="ob-dot-1" style="height:6px;border-radius:3px;background:var(--orange);transition:all .3s;flex:1;"></div>
+        <div id="ob-dot-2" style="height:6px;border-radius:3px;background:var(--border2);transition:all .3s;flex:1;"></div>
+        <div id="ob-dot-3" style="height:6px;border-radius:3px;background:var(--border2);transition:all .3s;flex:1;"></div>
+      </div>
+      <div style="display:flex;gap:10px;">
+        <button class="btn bg" onclick="skipOnboarding()" style="flex:0 0 auto;white-space:nowrap;">Pular tour</button>
+        <button class="btn bp" id="ob-action" onclick="obAction()" style="flex:1;justify-content:center;"></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="ov" id="ov-c">
+  <div class="mod">
+    <div class="mh">
+      <div><div class="mt2" id="ov-c-title">Registrar Compra</div><div class="ms">Cadastre um item adquirido para revenda</div></div>
+      <button class="mc2" onclick="cOv('ov-c')">×</button>
+    </div>
+    <div class="mb">
+      <div class="st">Identificação</div>
+      <div class="fg2">
+        <div class="fg full ac-wrap"><label class="fl">Título <span class="r">*</span></label>
+          <input class="fi" id="ci-t" placeholder="Ex: iPhone 13 128GB Preto" autocomplete="off" oninput="acTitulo(this)"/>
+          <div class="ac-list" id="ac-titulo"></div>
+        </div>
+        <div class="fg"><label class="fl">Categoria <span class="r">*</span></label>
+          <select class="fs" id="ci-ca"><option value="">Selecionar...</option><option>Eletrônicos</option><option>Roupas</option><option>Calçados</option><option>Móveis</option><option>Games</option><option>Celulares</option><option>Acessórios</option><option>Outros</option></select>
+        </div>
+        <div class="fg"><label class="fl">Condição</label>
+          <select class="fs" id="ci-cn"><option value="">Selecionar...</option><option>Novo</option><option>Seminovo</option><option>Bom</option><option>Regular</option><option>Ruim</option></select>
+        </div>
+        <div class="fg"><label class="fl">Marca</label><input class="fi" id="ci-ma" placeholder="Apple, Samsung..."/></div>
+        <div class="fg"><label class="fl">Modelo</label><input class="fi" id="ci-mo" placeholder="iPhone 13"/></div>
+      </div>
+      <div class="st" style="margin-top:6px;">Foto do Produto</div>
+      <div class="photo-upload" id="photo-zone" onclick="document.getElementById('ci-foto-input').click()">
+        <input type="file" id="ci-foto-input" accept="image/*" onchange="handleCompraFoto(this)" style="display:none"/>
+        <img class="photo-preview" id="ci-foto-preview" src="" alt=""/>
+        <div class="photo-ph" id="ci-foto-ph">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          <span>Clique para adicionar foto</span>
+          <span style="font-size:9px;color:var(--txt3)">JPG, PNG — máx. 5MB</span>
+        </div>
+      </div>
+      <div class="st" style="margin-top:14px;">Custos</div>
+      <div class="fg3">
+        <div class="fg"><label class="fl">Preço Compra <span class="r">*</span></label><input class="fi" id="ci-p" type="number" min="0" step="0.01" placeholder="0,00" oninput="cC()"/></div>
+        <div class="fg"><label class="fl">Frete</label><input class="fi" id="ci-f" type="number" min="0" step="0.01" placeholder="0,00" oninput="cC()"/></div>
+        <div class="fg"><label class="fl">Conserto</label><input class="fi" id="ci-co" type="number" min="0" step="0.01" placeholder="0,00" oninput="cC()"/></div>
+        <div class="fg"><label class="fl">Outros</label><input class="fi" id="ci-ou" type="number" min="0" step="0.01" placeholder="0,00" oninput="cC()"/></div>
+        <div class="fg"><label class="fl">Data <span class="r">*</span></label><input class="fi" id="ci-d" type="date"/></div>
+        <div class="fg"><label class="fl">Pagamento</label>
+          <select class="fs" id="ci-pg"><option>PIX</option><option>Dinheiro</option><option>Cartão</option><option>Boleto</option><option>Outro</option></select>
+        </div>
+      </div>
+      <div class="cb2" style="margin-top:4px;">
+        <div class="cr_"><span>Preço de Compra</span><span id="cc-p">R$ 0,00</span></div>
+        <div class="cr_"><span>Frete</span><span id="cc-f">R$ 0,00</span></div>
+        <div class="cr_"><span>Conserto</span><span id="cc-c">R$ 0,00</span></div>
+        <div class="cr_"><span>Outros</span><span id="cc-o">R$ 0,00</span></div>
+        <div class="cr_ tot"><span>Custo Total</span><span id="cc-t">R$ 0,00</span></div>
+      </div>
+      <div class="st" style="margin-top:16px;">Origem</div>
+      <div class="fg2">
+        <div class="fg"><label class="fl">Fonte</label>
+          <select class="fs" id="ci-fo"><option>OLX</option><option>Marketplace</option><option>Shopee</option><option>Mercado Livre</option><option>Loja Física</option><option>Brechó</option><option>Outro</option></select>
+        </div>
+        <div class="fg"><label class="fl">Cidade</label><input class="fi" id="ci-ci" placeholder="São Paulo - SP"/></div>
+        <div class="fg full"><label class="fl">Link do Anúncio</label><input class="fi" id="ci-l" placeholder="https://..."/></div>
+      </div>
+      <div class="st" style="margin-top:6px;">Observações</div>
+      <div class="fg">
+        <label class="fl">Notas internas</label>
+        <textarea class="fi" id="ci-notas" placeholder="Ex: tela com risco pequeno, aguardando carregador..."></textarea>
+      </div>
+    </div>
+    <div class="mf">
+      <button class="btn bg bs" onclick="cOv('ov-c')">Cancelar</button>
+      <button class="btn bp bs" id="btn-save-c" onclick="saveC()">Salvar Compra</button>
+    </div>
+  </div>
+</div>
+
+<div class="ov" id="ov-v">
+  <div class="mod" style="max-width:500px;">
+    <div class="mh">
+      <div><div class="mt2">Registrar Venda</div><div class="ms">Selecione o produto e informe o preço</div></div>
+      <button class="mc2" onclick="cOv('ov-v')">×</button>
+    </div>
+    <div class="mb">
+      <div class="st">Produto</div>
+      <div id="vl" style="max-height:200px;overflow-y:auto;margin-bottom:4px;"></div>
+      <div class="st" style="margin-top:16px;">Dados da Venda</div>
+      <div class="fg2" style="margin-bottom:12px;">
+        <div class="fg"><label class="fl">Preço de Venda <span class="r">*</span></label><input class="fi" id="vi-p" type="number" min="0" step="0.01" placeholder="0,00" oninput="cL()"/></div>
+        <div class="fg"><label class="fl">Data <span class="r">*</span></label><input class="fi" id="vi-d" type="date"/></div>
+        <div class="fg"><label class="fl">Canal</label>
+          <select class="fs" id="vi-ca"><option>OLX</option><option>Mercado Livre</option><option>Shopee</option><option>Instagram</option><option>WhatsApp</option><option>Loja Física</option><option>Outro</option></select>
+        </div>
+        <div class="fg"><label class="fl">Pagamento</label>
+          <select class="fs" id="vi-pg"><option>PIX</option><option>Dinheiro</option><option>Cartão</option><option>Outro</option></select>
+        </div>
+      </div>
+      <div class="cb2">
+        <div class="cr_"><span>Custo do Item</span><span id="vl-c">—</span></div>
+        <div class="cr_"><span>Preço de Venda</span><span id="vl-p">—</span></div>
+        <div class="cr_ tot"><span>Lucro Estimado</span><span id="vl-l" style="color:var(--green)">—</span></div>
+      </div>
+    </div>
+    <div class="mf">
+      <button class="btn bg bs" onclick="cOv('ov-v')">Cancelar</button>
+      <button class="btn bp bs" onclick="saveV()">Registrar Venda</button>
+    </div>
+  </div>
+</div>
+
+<div class="ov" id="ov-ev">
+  <div class="mod" style="max-width:460px;">
+    <div class="mh">
+      <div><div class="mt2">Editar Venda</div><div class="ms" id="ev-sub">Atualize os dados da venda</div></div>
+      <button class="mc2" onclick="cOv('ov-ev')">×</button>
+    </div>
+    <div class="mb">
+      <div class="fg2" style="margin-bottom:12px;">
+        <div class="fg"><label class="fl">Preço de Venda <span class="r">*</span></label><input class="fi" id="ev-p" type="number" min="0" step="0.01" placeholder="0,00"/></div>
+        <div class="fg"><label class="fl">Data <span class="r">*</span></label><input class="fi" id="ev-d" type="date"/></div>
+        <div class="fg"><label class="fl">Canal</label>
+          <select class="fs" id="ev-ca"><option>OLX</option><option>Mercado Livre</option><option>Shopee</option><option>Instagram</option><option>WhatsApp</option><option>Loja Física</option><option>Outro</option></select>
+        </div>
+        <div class="fg"><label class="fl">Pagamento</label>
+          <select class="fs" id="ev-pg"><option>PIX</option><option>Dinheiro</option><option>Cartão</option><option>Outro</option></select>
+        </div>
+      </div>
+      <div class="cb2" id="ev-resumo"></div>
+    </div>
+    <div class="mf">
+      <button class="btn bg bs" onclick="cOv('ov-ev')">Cancelar</button>
+      <button class="btn bp bs" onclick="saveEditVenda()">Salvar alterações</button>
+    </div>
+  </div>
+</div>
+
+<div class="ov" id="ov-confirm">
+  <div class="confirm-mod">
+    <div class="confirm-ico red"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg></div>
+    <div class="confirm-title" id="confirm-title">Tem certeza?</div>
+    <div class="confirm-msg" id="confirm-msg">Esta ação não pode ser desfeita.</div>
+    <div class="confirm-btns">
+      <button class="btn bg" id="confirm-cancel-btn" onclick="cOv('ov-confirm')" style="min-width:110px">Cancelar</button>
+      <button class="btn bp" id="confirm-ok" style="min-width:110px;background:var(--red);box-shadow:0 4px 14px rgba(255,77,106,0.3)">Excluir</button>
+    </div>
+  </div>
+</div>
+
+<div class="ov" id="ov-goal">
+  <div class="goal-mod">
+    <div class="goal-mod-t">Definir Meta Mensal</div>
+    <div class="goal-mod-s">Quanto você quer lucrar este mês?</div>
+    <div class="fg" style="margin-bottom:16px;">
+      <label class="fl">Meta de lucro (R$)</label>
+      <input class="fi" id="goal-input" type="number" min="0" step="50" placeholder="Ex: 1000"/>
+    </div>
+    <div style="display:flex;gap:9px;justify-content:flex-end;">
+      <button class="btn bg bs" onclick="cOv('ov-goal')">Cancelar</button>
+      <button class="btn bp bs" onclick="saveGoal()">Salvar meta</button>
+    </div>
+  </div>
+</div>
+
+<div class="ov" id="ov-backup">
+  <div class="backup-mod">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+      <div>
+        <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800;margin-bottom:3px;">Backup e Restauração</div>
+        <div style="font-size:11px;color:var(--txt2);">Exporte ou importe todos os seus dados</div>
+      </div>
+      <button class="mc2" onclick="cOv('ov-backup')">×</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px;">
+      <div style="background:var(--bg4);border:1px solid var(--border2);border-radius:var(--rs);padding:14px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+          <div style="width:34px;height:34px;border-radius:8px;background:var(--gd);display:flex;align-items:center;justify-content:center;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          </div>
+          <div>
+            <div style="font-size:13px;font-weight:700;">Exportar dados (JSON)</div>
+            <div style="font-size:11px;color:var(--txt2);">Salva compras, vendas e configurações</div>
+          </div>
+        </div>
+        <button class="btn bp" style="width:100%;justify-content:center;" onclick="exportBackup()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Baixar backup_briqueOS.json
+        </button>
+      </div>
+      <div style="background:var(--bg4);border:1px solid var(--border2);border-radius:var(--rs);padding:14px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+          <div style="width:34px;height:34px;border-radius:8px;background:var(--bd);display:flex;align-items:center;justify-content:center;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          </div>
+          <div>
+            <div style="font-size:13px;font-weight:700;">Restaurar backup</div>
+            <div style="font-size:11px;color:var(--txt2);">Importa um arquivo .json exportado</div>
+          </div>
+        </div>
+        <label style="display:block;cursor:pointer;">
+          <input type="file" accept=".json" id="restore-input" onchange="importBackup(this)" style="display:none"/>
+          <div class="btn bg" style="width:100%;justify-content:center;cursor:pointer;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Selecionar arquivo
+          </div>
+        </label>
+      </div>
+    </div>
+    <div style="background:var(--rd);border:1px solid rgba(255,77,106,0.2);border-radius:var(--rs);padding:10px;font-size:11px;color:var(--red);display:flex;gap:8px;align-items:center;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      Restaurar substitui todos os dados locais. Faça backup antes.
+    </div>
+    <div style="font-size:10px;color:var(--txt3);margin-top:10px;text-align:center;" id="backup-info"></div>
+  </div>
+</div>
+
+<div class="notif-panel" id="notif-panel">
+  <div class="notif-head">
+    <div class="notif-title">Notificações</div>
+    <button class="notif-clear" onclick="clearNotifs()">Limpar tudo</button>
+  </div>
+  <div class="notif-list" id="notif-list">
+    <div class="notif-empty">Nenhuma notificação</div>
+  </div>
+</div>
+
+<div class="hist-panel" id="hist-panel">
+  <div class="hist-head">
+    <div class="hist-title">Histórico de Atividade</div>
+    <button class="hist-close" onclick="toggleHist()">×</button>
+  </div>
+  <div class="hist-list" id="hist-list">
+    <div class="hist-empty">Nenhuma atividade registrada</div>
+  </div>
+</div>
+
+<div class="pwa-banner" id="pwa-banner">
+  <div class="pwa-banner-ico">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+  </div>
+  <div class="pwa-banner-txt">
+    <strong>Instalar BriqueOS</strong>
+    <span>Adicione à tela inicial para acesso rápido</span>
+  </div>
+  <div class="pwa-banner-actions">
+    <button class="btn bg bs" onclick="dismissPWA()" style="font-size:11px;padding:5px 10px;">Agora não</button>
+    <button class="btn bp bs" onclick="installPWA()" style="font-size:11px;padding:5px 10px;">Instalar</button>
+  </div>
+</div>
+
+<nav class="bottom-nav" id="bottom-nav">
+  <div class="bottom-nav-inner">
+    <button class="bn-item active" id="bn-dashboard" onclick="gotoMobile('dashboard',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      <span>Início</span>
+    </button>
+    <button class="bn-item" id="bn-compras" onclick="gotoMobile('compras',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <span>Compras</span>
+    </button>
+    <button class="bn-item bn-fab-wrap" onclick="fabAction()">
+      <div class="bn-fab">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </div>
+    </button>
+    <button class="bn-item" id="bn-vendas" onclick="gotoMobile('vendas',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/></svg>
+      <span>Vendas</span>
+    </button>
+    <button class="bn-item" id="bn-relatorios" onclick="gotoMobile('relatorios',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>
+      <span>Relatórios</span>
+    </button>
+  </div>
+</nav>
+
+<div class="toast" id="toast"><div class="td" id="tdot"></div><span id="tmsg"></span></div>
+
+<script src="static/js/index.js"></script>
+</body>
+</html>
